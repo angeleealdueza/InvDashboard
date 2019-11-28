@@ -7,32 +7,39 @@ import { NgForm } from '@angular/forms';
   providedIn: 'root'
 })
 export class InvDashboardService {
- // formData: InvDashboard;
 
   readonly rootURL = 'http://localhost:27117/api';
   ds = new InvDashboard;
-  //readonly rootURL = 'http://localhost:27117/api/inventory?batchNo=557';
 
   constructor(private http: HttpClient) { }
 
- /* refreshDashboard(){
-    this.http.get(this.rootURL + '/Inventory?' + this.formData.BatchNo)
-    .toPromise()
-    .then(res => this.dashboard = res as InvDashboard);
-  }*/
-//+ this.formData.BatchNo
-
-  /*searhDashboardByBatchNo(){
-    this.http.get('http://localhost:27117/api/Inventory?BatchNo=557')
-    .toPromise()
-    .then(res => this.ds = res as InvDashboard);
-  }*/
-
   searhDashboardByBatchNo1(){
-    this.http.get('http://localhost:27117/api/Inventory?BatchNo='+ this.ds.BatchNo)
+    this.http.get(this.rootURL + '/Inventory?BatchNo='+ this.ds.BatchNo)
     .toPromise()
     .then(res => this.ds = res as InvDashboard);
+    
+    /*
+   this.ds = {
+    BatchNo: 557,
+    FIssued: 11,
+    FIssReturned: 9,
+    FEncoded: 2,
+    FNotEncoded: 444,
+    FOk: 1,
+    FVariance: 1,
 
+    //second
+    SVerified: 6,
+    SVerReturned: 4,
+    SEncoded: 2,
+    SNotEncoded: 444,
+    SOk: 1,
+    SVariance: 1,
+    
+    //tot no.
+    TotNoOfCounts: 446
+  }
+*/
 
   }
 }

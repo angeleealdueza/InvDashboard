@@ -50,7 +50,7 @@ export class InvDashboardComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   onSearch() {
     this.service.searhDashboardByBatchNo1();
     
@@ -68,6 +68,5 @@ export class InvDashboardComponent implements OnInit {
     this.ESNotEncoded= parseFloat(((this.service.ds.SNotEncoded / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
     this.ESOk= parseFloat(((this.service.ds.SOk / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
     this.ESVariance= parseFloat(((this.service.ds.SVariance / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-
   }
 }
