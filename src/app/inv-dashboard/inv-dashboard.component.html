@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="row">
+        <div class="col text-center p-4 m-2">
+            <h3>PHYSICAL INVENTORY COUNT</h3>
+            <h4 class="lead">HINO MOTORS PHILIPPINES CORPORATION</h4>
+            {{datee | date:'yyyy-MM-dd'}}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-1 col-form-label">Search</label>
+        <div class="col-sm-3">
+            <input class="form-control" name="BatchNo" #BatchNo="ngModel" [(ngModel)]="service.ds.BatchNo">
+        </div>
+        <button class="btn btn-primary" type="submit" (click)="onSearch()">
+            Search</button>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th colspan="7" class="text-center table-dark">First Count</th>
+            </tr>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Issued</th>
+                <th scope="col">Returned</th>
+                <th scope="col">Encoded</th>
+                <th scope="col">Not Yet Encoded</th>
+                <th scope="col">OK</th>
+                <th scope="col">Variance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Values</th>
+                <td>{{service.ds.FIssued}}</td>
+                <td>{{service.ds.FIssReturned}}</td>
+                <td>{{service.ds.FEncoded}}</td>
+                <td>{{service.ds.FNotEncoded}}</td>
+                <td>{{service.ds.FOk}}</td>
+                <td>{{service.ds.FVariance}}</td>
+
+            </tr>
+            <tr>
+                <th scope="row">Percentage</th>
+                <td>{{IFIssued + ' %'}}</td>
+                <td>{{IFIssReturned + ' %'}}</td>
+                <td>{{IFEncoded + ' %'}}</td>
+                <td>{{IFNotEncoded + ' %'}}</td>
+                <td>{{IFOk + ' %'}}</td>
+                <td>{{IFVariance + ' %'}}</td>
+
+            </tr>
+        </tbody>
+        <!--second-->
+
+        <thead>
+            <tr>
+                <th colspan="7" class="text-center table-dark">Second Count</th>
+            </tr>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Verified</th>
+                <th scope="col">Returned</th>
+                <th scope="col">Encoded</th>
+                <th scope="col">Not Yet Encoded</th>
+                <th scope="col">OK</th>
+                <th scope="col">Variance</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Values</th>
+
+                <td>{{service.ds.SVerified}}</td>
+                <td>{{service.ds.SVerReturned}}</td>
+                <td>{{service.ds.SEncoded}}</td>
+                <td>{{service.ds.SNotEncoded}}</td>
+                <td>{{service.ds.SOk}}</td>
+                <td>{{service.ds.SVariance}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Percentage</th>
+                <td>{{ESVerified + ' %'}}</td>
+                <td>{{ESVerReturned + ' %'}}</td>
+                <td>{{ESEncoded + ' %'}}</td>
+                <td>{{ESNotEncoded + ' %'}}</td>
+                <td>{{ESOk + ' %'}}</td>
+                <td>{{ESVariance + ' %'}}</td>
+
+            </tr>
+        </tbody>
+    </table>
