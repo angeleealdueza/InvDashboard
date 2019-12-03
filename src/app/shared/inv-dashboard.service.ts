@@ -8,18 +8,23 @@ import { NgForm } from '@angular/forms';
 })
 export class InvDashboardService {
 
-  readonly rootURL = 'http://localhost:27117/api';
+  readonly rootURL = 'http://192.168.50.50/invDashboard/api';
+  //readonly rootURL = 'http://localhost:27117/api';
+  
   ds = new InvDashboard;
 
   constructor(private http: HttpClient) { }
 
-  searhDashboardByBatchNo1(){
-    this.http.get(this.rootURL + '/Inventory?BatchNo='+ this.ds.BatchNo)
+  searhDashboardByBatchNo(){
+    return this.http.get(this.rootURL + '/Inventory?BatchNo=' + this.ds.BatchNo);
+  }
+
+    /*this.http.get(this.rootURL + '/Inventory?BatchNo='+ this.ds.BatchNo)
     .toPromise()
-    .then(res => this.ds = res as InvDashboard);
+    .then(res => this.ds = res as InvDashboard);*/
     
     /*
-   this.ds = {
+    this.ds = {
     BatchNo: 557,
     FIssued: 11,
     FIssReturned: 9,
@@ -41,5 +46,4 @@ export class InvDashboardService {
   }
 */
 
-  }
 }

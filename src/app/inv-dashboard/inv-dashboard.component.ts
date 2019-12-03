@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { InvDashboardService } from '../shared/inv-dashboard.service';
+import { InvDashboard } from '../shared/inv-dashboard.model';
+import { parse } from 'url';
 
 @Component({
   selector: 'app-inv-dashboard',
@@ -8,7 +10,7 @@ import { InvDashboardService } from '../shared/inv-dashboard.service';
 })
 export class InvDashboardComponent implements OnInit {
 
-  constructor(private service: InvDashboardService) { }
+  constructor(public service: InvDashboardService) { }
   datee = new Date();
 
   //init percentages
@@ -28,6 +30,7 @@ export class InvDashboardComponent implements OnInit {
 
   resetDashboard() {
     this.service.ds = {
+      //first
       BatchNo: null,
       FIssued: 0.0,
       FIssReturned: 0.0,
@@ -47,26 +50,33 @@ export class InvDashboardComponent implements OnInit {
     }
   }
 
+  calcPercentage(num){
+    return parseFloat(((num/ this.service.ds.TotNoOfCounts) * 100).toFixed(2));
+  }
 
   ngOnInit() {
+    this.resetDashboard();
   }
 
   onSearch() {
-    this.service.searhDashboardByBatchNo1();
-    
-    this.IFIssued = parseFloat(((this.service.ds.FIssued / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-    this.IFIssReturned = parseFloat(((this.service.ds.FIssReturned / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-    this.IFEncoded = parseFloat(((this.service.ds.FEncoded / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-    this.IFNotEncoded = parseFloat(((this.service.ds.FNotEncoded / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-    this.IFOk = parseFloat(((this.service.ds.FOk / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-    this.IFVariance = parseFloat(((this.service.ds.FVariance / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-
-    //Second Count
-    this.ESVerified = parseFloat(((this.service.ds.SVerified / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-    this.ESVerReturned= parseFloat(((this.service.ds.SVerReturned / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-    this.ESEncoded= parseFloat(((this.service.ds.SEncoded / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-    this.ESNotEncoded= parseFloat(((this.service.ds.SNotEncoded / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-    this.ESOk= parseFloat(((this.service.ds.SOk / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
-    this.ESVariance= parseFloat(((this.service.ds.SVariance / this.service.ds.TotNoOfCounts) * 100).toFixed(2));
+    this.service.searhDashboardByBatchNo().
+      subscribe(res => {
+        //will pass the data
+        this.service.ds = res as InvDashboard;
+        //First Count
+        this.IFIssued = this.calcPercentage(this.service.ds.FIssued);
+        this.IFIssReturned = this.calcPercentage(this.service.ds.FIssReturned);
+        this.IFEncoded = this.calcPercentage(this.service.ds.FEncoded);
+        this.IFNotEncoded = this.calcPercentage(this.service.ds.FNotEncoded);
+        this.IFOk = this.calcPercentage(this.service.ds.FOk);
+        this.IFVariance = this.calcPercentage(this.service.ds.FVariance);
+        //Second Count
+        this.ESVerified = this.calcPercentage(this.service.ds.SVerified);
+        this.ESVerReturned = this.calcPercentage(this.service.ds.SVerReturned);
+        this.ESEncoded = this.calcPercentage(this.service.ds.SEncoded);
+        this.ESNotEncoded = this.calcPercentage(this.service.ds.SNotEncoded);
+        this.ESOk = this.calcPercentage(this.service.ds.SOk);
+        this.ESVariance = this.calcPercentage(this.service.ds.SVariance);
+      });
   }
 }
